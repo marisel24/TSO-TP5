@@ -35,6 +35,7 @@ def comer(id):
     time.sleep(random.uniform(0.1, 0.3))
     log(f"✨ Filósofo {id} terminó de comer (total comidas: {comidas[id]}).")
 
+            
 def filosofo(id, rondas=3):
     """
     Representa el ciclo de vida de un filósofo: pensar -> tomar tenedores -> comer -> soltar tenedores.
@@ -57,8 +58,8 @@ def filosofo(id, rondas=3):
         pensar(id)
         
         # Identificadores de los tenedores adyacentes
-        tenedor_izq = id
-        tenedor_der = (id + 1) % NUM_FILOSOFOS
+        t_izq = tenedores[id]
+        t_der = tenedores[(id + 1) % NUM_FILOSOFOS]
         
         # =========================================================================
         # INICIO TODO: Implementar adquisición y liberación segura de tenedores
@@ -68,6 +69,22 @@ def filosofo(id, rondas=3):
         #
         # TODO: Adquiere los tenedores adyacentes de forma segura, invoca comer(id)
         # y libera los tenedores:
+        if id == 0:
+            t_der.acquire()
+            t_izq.acquire()
+        else:
+            t_izq.acquire()
+            t_der.acquire()
+
+        comer(id)
+
+        if id == 0:
+            t_der.release()
+            t_izq.release()
+        else:
+            t_izq.release()
+            t_der.release()
+
         pass
         # =========================================================================
         # FIN TODO

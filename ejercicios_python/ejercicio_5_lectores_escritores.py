@@ -63,11 +63,11 @@ def lector(id_lector, iteraciones=2):
         # --- ENTRADA DEL LECTOR ---
         # TODO PARA EL ESTUDIANTE:
         # Completa la sincronización de entrada utilizando 'mutex' y 'sem_write':
-        # mutex.acquire()
-        # readcounter += 1
-        # if readcounter == 1:
-        #     sem_write.acquire() # El primer lector bloquea a cualquier escritor
-        # mutex.release()
+        mutex.acquire()
+        readcounter += 1
+        if readcounter == 1:
+             sem_write.acquire() # El primer lector bloquea a cualquier escritor
+        mutex.release()
 
         # --- SECCIÓN CRÍTICA DE LECTURA (COMPARTIDA) ---
         log(f"📖 Lector {id_lector} LEYENDO datos (v{base_de_datos['version']}) | Lectores activos: {readcounter}")
@@ -77,11 +77,11 @@ def lector(id_lector, iteraciones=2):
         # --- SALIDA DEL LECTOR ---
         # TODO PARA EL ESTUDIANTE:
         # Completa la sincronización de salida:
-        # mutex.acquire()
-        # readcounter -= 1
-        # if readcounter == 0:
-        #     sem_write.release() # El último lector libera la BD para los escritores
-        # mutex.release()
+        mutex.acquire()
+        readcounter -= 1
+        if readcounter == 0:
+             sem_write.release() # El último lector libera la BD para los escritores
+        mutex.release()
 
 # ============================================================================
 # PROCESO ESCRITOR

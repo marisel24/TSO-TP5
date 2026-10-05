@@ -74,7 +74,7 @@ class BarberiaMonitor:
             # 7. Retornar True.
             # =====================================================================
             pass
-            return False
+            return True
 
     def atender_siguiente_cliente(self):
         """
